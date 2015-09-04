@@ -1,0 +1,78 @@
+﻿.container-main
+{
+   /*padding-top:70px;*/
+   /* box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2),-2px 2px 2px 2px rgba(0, 0, 0, 0.2);*/
+    min-height:65vh;
+    max-height:75vh;
+    overflow-y: auto;
+    overflow-x:hidden;
+    
+
+}
+.placeholder-div-outer {
+  
+    margin-top:20px;
+    max-height:250px;
+   /* margin-right:0px;
+    margin-left:5px;
+   padding:20px;*/
+}
+.placeholder-div-inner {
+    /*border: 1px solid black;*/
+    
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.dropdown-backdrop {
+position:static;
+
+}
+.div-issue-upload-form {
+    margin-top:10px;
+}
+#box2000 > div
+{
+    -webkit-transition: width 0.2s ease; 
+    -moz-transition: width 0.2s ease; 
+    -o-transition: width 0.2s ease; 
+    -ms-transition: width 0.2s ease;     
+    transition: width 0.2s ease; 
+}
+#box2000 > div:hover
+{
+    width:120%!important;
+    cursor:pointer;
+}
+.div-inner {
+    border: 1px solid #bababa;
+    border-radius: 10px;
+    background-color: ghostwhite;
+    float: left;
+    padding-left: 10px;
+    width:100%;
+}
+  .div-inner>ul>li {
+        width: 23%;
+        height: 400px;
+        vertical-align:middle;
+        margin: 10px 10px 10px 0;
+        border-radius: 5px;
+        border:1px solid red;
+}
