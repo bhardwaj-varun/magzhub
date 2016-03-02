@@ -1,0 +1,164 @@
+<?php
+require_once 'services/Session.php';
+require_once 'services/Login.php';
+$SessionObj=new Session('Magzhub');
+if(!$SessionObj->checkIssetSessionUserId())
+{
+    $url='https://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']).'index.php';
+    header('Location: '.$url);;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html">
+    <title>Magzhub</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/custom final/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/jquery.confirm.css" rel="stylesheet"/>
+     <link href="css/jquery-confirm.css" rel="stylesheet"/>
+     <link href="css/introjs.css" rel="stylesheet"/>
+    <!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body style="overflow:hidden;">
+     <!-- change password modal-->
+        <div id="password" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    
+                    <div class="modal-body">
+                         <div class="well bs-component">
+                             <button type="button" class="close" data-dismiss="modal">&times;</button>
+                             <fieldset>
+                                 <legend>Change Password</legend>
+                        <form id="changePass" name="changePass"  method="post" enctype="multipart/form-data" class="form-horizontal">
+                            
+                                <div class="form-group">
+                                    <label for="oldPassword" class="col-lg-2 control-label">Old&nbsp;Password</label>
+                                    <div class="col-lg-offset-1 col-sm-9" >
+                                        <input type="password" name="oldPassword" class="form-control" id="oldPassword" placeholder="Old Password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword" class="col-lg-2 control-label">New&nbsp;Password</label>
+                                    <div class="col-lg-offset-1 col-sm-9" >
+                                        <input type="password" name="newPassword" class="form-control" id="newPassword" placeholder="New Password">
+                                    </div>
+                                </div>
+                            <div class="form-group">
+                                    <label for="reenterPassoword" class="col-lg-2 control-label">Reenter&nbsp;Password</label>
+                                    <div class="col-lg-offset-1 col-sm-9" >
+                                        <input type="password" name="reenterPassword" class="form-control" id="reenterPassword" placeholder="Re-Enter New Password">
+                                    </div>
+                                </div>
+                             <div class="form-group">
+                                    <div class="col-lg-8 col-lg-offset-3 ">
+                                        <p id="passwordMessage" class="text-success"></p>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                    <div class="col-lg-10 col-lg-offset-2">
+                                        <input id="changePasswordSubmit" class="btn btn-primary pull-right" type="submit" name="submit" value="Submit" />
+                                    </div>
+                                </div>
+                        </form>
+                             </fieldset>
+                    </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!--end  change password modal-->
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" data-step="1" data-intro="welcome to Magzhub" href="index.php"><img src="img/magz..jpeg" style="height:35px; margin-left: 20px; margin-top: -8px;" /></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li ><a id="message"></a></li>
+                    <li ><a href="index.php" >Home</a></li>
+                    <li data-step="3" data-intro="Go to categories to browse and subscribe magazines"><a href="category.php">Categories</a></li>
+                    <li><a href="#" id="changePassword">Change Password</a></li>
+                    <li><a href="#" id="logout">Logout</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <!--Container-->
+    <div class="container-fluid">
+        <div class="row">
+            <h1 id="header" class="col-sm-10 col-sm-offset-1 page-header text-center" style="padding-top: 40px;" data-step="2" data-intro="Your subscribed magazines will be shown here">SUBSCRIBED MAGAZINES</h1>
+            <div id="containerOfMagazine" class="col-xs-12 col-sm-10 col-sm-offset-1 container-main">
+                <div id="magazinelist">
+                     <img id="loadingImg1"src="img/ajax-loader.gif" style="padding-left:43%;padding-top: 12%;"class="hide"></img>
+                </div>
+                <div id="issueList">
+                    <img id="loadingImg2"src="img/ajax-loader.gif" style="padding-left:43%;padding-top: 12%;"class="hide"></img>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Container-->
+    <!--<div class="readPdf" style="display:none;">
+<iframe id="ifrm"src="about:blank" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;" ></iframe>
+</div>-->
+    <!-- Modal -->
+    <div class="modal fade " id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content ">
+               <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+
+              <div class="modal-body" style="height: 83vh">
+                    
+                    <iframe id="ifrm" src="about:blank" style="position: fixed; left: 0px; right: 0px; width: 100%; height: 89vh; border: none; margin-top: -15px; padding: 0; overflow: hidden; z-index: 999999;"></iframe>
+                </div>
+                <div class="modal-footer" >
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- script references -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/firstlogin.js"></script>
+    <script src="js/userDashBoard.js"></script>
+    <script src="js/showMessage.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/logout.js"></script>
+    <script src="js/jquery.confirm.js"></script>
+    <script src="js/readPdf.js"></script>
+    <script src="js/jquery-confirm.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/intro.js"></script>
+    
+
+</body>
+</html>
