@@ -282,7 +282,7 @@ var listMagazines = function () {
         type: "post",
         data:{magId:magazineIdForPublisher},
         success: function (response) {
-           // alert(response);
+            alert(response);
             var magazines = $.parseJSON(response);
             if(magazines!=null)
             {
@@ -300,7 +300,7 @@ var listMagazines = function () {
                 
             }
            
-        }
+       
          //alert(i);
             countMagazineForPublisher=magazines.length;
             
@@ -315,6 +315,7 @@ var listMagazines = function () {
            {
                $('#myMagazine').prop('disabled', false);
            }
+            }
         },
         complete: function(){
        $('#loadingImg').removeClass('show');
