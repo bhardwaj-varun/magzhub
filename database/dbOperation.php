@@ -395,4 +395,25 @@ class dboperation {
          $this->databaseObj->stmt->bind_param('ss', $email,$password);
         $this->databaseObj->stmt->execute();
    }
+     function  listAllMagazinesOfPublisher($pubid){
+         $this->databaseObj->query="call listAllMagazinesOfPublisher(?)";
+        $this->databaseObj->stmt=$this->databaseObj->prepare($this->databaseObj->query);
+         $this->databaseObj->stmt->bind_param('i', $pubid);
+        $this->databaseObj->stmt->execute();
+        $this->result=  $this->getMultipleResultantRows();
+         return $this->result;
+     }
+     /**
+      * This method fetch subscription stats of a magazine for current year
+      * @param type $magID
+      * @return type array of count_subscribed and month
+      */
+     function getPublisherMagazineSubscriptionStats($magID){
+         $this->databaseObj->query="call publisherSubscriptionStats(?)";
+        $this->databaseObj->stmt=$this->databaseObj->prepare($this->databaseObj->query);
+         $this->databaseObj->stmt->bind_param('i', $magID);
+        $this->databaseObj->stmt->execute();
+        $this->result=  $this->getMultipleResultantRows();
+         return $this->result;
+     }
 }
