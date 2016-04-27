@@ -446,7 +446,18 @@ var publisherStats=function(magid){
            // alert(response);
             var stats=$.parseJSON(response);
             //alert(stats[0].MONTH);
-            
+            if(stats==null){
+                swal({
+                         title: "No Subscription", 
+                         text: "Sorry Zero Subscriptions!", 
+                         type: "warning",
+                         showCancelButton: false,
+                         confirmButtonColor: "#DD6B55",
+                         confirmButtonText: "OK",
+                         closeOnConfirm: true 
+                     });
+            }
+            else{
             for(i=0,j=0;i<12&&j<stats.length;i++){
                 if(stats[j].MONTH==i+1)                
                     countSubscribed.push(stats[j++].COUNT_SUBSCRIBED);
@@ -459,6 +470,7 @@ var publisherStats=function(magid){
 
             
             drawChart(countSubscribed);
+        }
         },
          complete: function(){
        $('#loadingImgInStats').removeClass('show');

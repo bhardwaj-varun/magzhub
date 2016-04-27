@@ -18,6 +18,7 @@ if(!$SessionObj->checkIssetSessionPublisherId())
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="css/custom final/bootstrap.min.css" rel="stylesheet">
         <link href="css/offcanvas.css" rel="stylesheet" />
+        <link href="css/sweetalert.css" rel="stylesheet"/>
         <!--[if lt IE 9]>
                             <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
                     <![endif]-->
@@ -348,6 +349,7 @@ if(!$SessionObj->checkIssetSessionPublisherId())
         <script src="js/publisherDashBoard.js"></script>
         <script src="js/jquery.nicescroll.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.0/Chart.js"></script>
+        <script src="js/sweetalert.min.js"></script>
         <!-- script references -->
     </body>
 </html>
