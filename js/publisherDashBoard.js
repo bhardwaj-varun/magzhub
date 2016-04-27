@@ -398,8 +398,8 @@ var changePassword = function () {
 }
 
 var listAllMagazines=function(){
-    $('#loadingImg').removeClass('hide');
-    $('#loadingImg').addClass('show');
+    $('#loadingImgInStats').removeClass('hide');
+    $('#loadingImgInStats').addClass('show');
     $.ajax({
         url:"services/ClassPublisherStats.php",
         type: "post",
@@ -423,8 +423,8 @@ var listAllMagazines=function(){
             }
         },
          complete: function(){
-       $('#loadingImg').removeClass('show');
-        $('#loadingImg').addClass('hide');    
+       $('#loadingImgInStats').removeClass('show');
+        $('#loadingImgInStats').addClass('hide');    
       },
         error: function (response, status, errorThrown) {
             console.log(response.status);
@@ -434,8 +434,10 @@ var listAllMagazines=function(){
 }
 var publisherStats=function(magid){
     var countSubscribed=[];
-    $('#loadingImg').removeClass('hide');
-    $('#loadingImg').addClass('show');
+    $('#divCanvas').removeClass('show');
+    $('#divCanvas').addClass('hide');
+    $('#loadingImgInStats').removeClass('hide');
+    $('#loadingImgInStats').addClass('show');
     $.ajax({
         url: "services/ClassPublisherStats.php",
         type: "post",
@@ -459,8 +461,10 @@ var publisherStats=function(magid){
             drawChart(countSubscribed);
         },
          complete: function(){
-       $('#loadingImg').removeClass('show');
-       $('#loadingImg').addClass('hide');    
+       $('#loadingImgInStats').removeClass('show');
+       $('#loadingImgInStats').addClass('hide');    
+       $('#divCanvas').removeClass('hide');
+       $('#divCanvas').addClass('show');
       },
         error: function (response, status, errorThrown) {
             console.log(response.status);
