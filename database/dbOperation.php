@@ -395,6 +395,7 @@ class dboperation {
          $this->databaseObj->stmt->bind_param('ss', $email,$password);
         $this->databaseObj->stmt->execute();
    }
+
      function  listAllMagazinesOfPublisher($pubid){
          $this->databaseObj->query="call listAllMagazinesOfPublisher(?)";
         $this->databaseObj->stmt=$this->databaseObj->prepare($this->databaseObj->query);
@@ -416,4 +417,18 @@ class dboperation {
         $this->result=  $this->getMultipleResultantRows();
          return $this->result;
      }
+   function entryInUser($firstname,$lastname,$password,$emailid){
+       
+       $this->databaseObj->query="call entryInUserTable(?,?,?,?)";
+        $this->databaseObj->stmt=$this->databaseObj->prepare($this->databaseObj->query);
+        $this->databaseObj->stmt->bind_param('ssss',$firstname,$lastname,$emailid,$password);
+        $this->databaseObj->stmt->execute();
+   }
+   function entryInPublisher($firstname, $lastname, $password, $email,$companyname){
+       
+       $this->databaseObj->query="call EntryInPublisherTable(?,?,?,?,?)";
+        $this->databaseObj->stmt=$this->databaseObj->prepare($this->databaseObj->query);
+        $this->databaseObj->stmt->bind_param('sssss',$email,$password,$firstname,$lastname,$companyname);
+        $this->databaseObj->stmt->execute();
+   }
 }
