@@ -41,7 +41,7 @@ if(!$SessionObj->checkIssetSessionUserId())
 </head>
 
 <body style="overflow:hidden;">
-
+<?php include_once("analyticstracking.php") ?>
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">

@@ -26,6 +26,7 @@ if(!$SessionObj->checkIssetSessionUserId())
     <link href="css/styles.css" rel="stylesheet">
 </head>
 <body style="overflow:hidden;">
+    <?php include_once("analyticstracking.php") ?>
      <!-- change password modal-->
         <div id="password" class="modal fade" role="dialog">
             <div class="modal-dialog">

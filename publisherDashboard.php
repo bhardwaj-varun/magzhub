@@ -26,7 +26,7 @@ if(!$SessionObj->checkIssetSessionPublisherId())
         <link href="css/publisherDashboard/view.css" rel="stylesheet">
     </head>
     <body>
-
+        <?php include_once("analyticstracking.php") ?>
         <!--navbar-->
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
