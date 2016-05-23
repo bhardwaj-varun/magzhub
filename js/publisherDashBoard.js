@@ -13,33 +13,39 @@ $(document).ready(function (e) {
         $("#divAddIssuePdf").removeClass('hide');
         $("#divAddIssueDetails").removeClass('hide');
         $("#addMagDiv").addClass('hide');
+        $('#divSubscriptionStat').removeClass('show');
+        $('#divSubscriptionStat').addClass('hide');
         $("#addMagSuccess").html("");
-        
-        
-       
     });
+    
     $("#addCategoryPlusbutton").click(function (e) {
+        $('#divSubscriptionStat').removeClass('show');
+        $('#divSubscriptionStat').addClass('hide');
         $("#addCatLabel").removeClass('hide');
         $("#addCatLabel").addClass('show');
         $("#divAddCategory").removeClass('hide');
         $("#divAddCategory").addClass('show');
+    
     });
     $(document).on('click', '#addMag', function () {
         //alert('mag');
         getCategories();
+        $('#divSubscriptionStat').removeClass('show');
+        $('#divSubscriptionStat').addClass('hide');
         $("#magazineContainer").addClass('hide');
         $("#divAddIssuePdf").addClass('hide');
         $("#divAddIssueDetails").addClass('hide');
         $("#addMagDiv").removeClass('hide');
         $("#issueSuccess").html("");
-        
-
     });
+    
     $(document).on('click', '#myMagazine', function () {
         $('#myMagazine').prop('disabled', true);
         $("#divAddIssuePdf").addClass('hide');
         $("#divAddIssueDetails").addClass('hide');
         $("#addMagDiv").addClass('hide');
+        $('#divSubscriptionStat').removeClass('show');
+        $('#divSubscriptionStat').addClass('hide');
         $("#magazineContainer").removeClass('hide');
         $("#addMagSuccess").html("");
         $("#issueSuccess").html("");
@@ -53,10 +59,26 @@ $(document).ready(function (e) {
         $("#magazinelist").html('<img id="loadingImg"src="img/ajax-loader.gif" style="padding-left:43%;padding-top: 12%;"class="hide"></img>');
          listMagazines();
         $("#magazinelist").show();
-      
-        
-
     });
+    $(document).on('click','#subscriptionStatus',function(){
+        $('#magazineContainer').removeClass('show');
+        $('#magazineContainer').addClass('hide');
+        $('#divAddIssuePdf').removeClass('show');
+        $('#divAddIssuePdf').addClass('hide');
+        $('#divAddIssueDetails').removeClass('show');
+        $('#divAddIssueDetails').addClass('hide');
+        $('#addMagDiv').removeClass('show');
+        $('#addMagDiv').addClass('hide');
+        $('#divSubscriptionStat').removeClass('hide');
+        $('#divSubscriptionStat').addClass('show');
+        listAllMagazines();
+        
+    });
+    $(document).on('click','#fetchListOfMagazines',function(e){
+            var selectedVal=$('#listOfMagazines').val();
+            if(!selectedVal=="")
+                publisherStats(selectedVal);
+        });
     $("#CatListInissue").on('change', function (e) {
         //	var optionSelected=$("#CatListInissue option:selected",this);
         var selectedValue = this.selectedOptions[0].value;
@@ -121,8 +143,6 @@ $(document).ready(function (e) {
                         }
                         else
                           AddIssue();
-                      
-                  
 		 }
         return false;
     });
@@ -377,4 +397,141 @@ var changePassword = function () {
     return false;
 }
 
+var listAllMagazines=function(){
+    $('#loadingImgInStats').removeClass('hide');
+    $('#loadingImgInStats').addClass('show');
+    $.ajax({
+        url:"services/ClassPublisherStats.php",
+        type: "post",
+        success:function(response){
+          //alert(response); 
+          $("#listOfMagazines").html("");//set it to empty
+            var opt = '<option value="" selected="selected">Magazines</option>';
 
+            var magazines = $.parseJSON(response);
+           
+            for (i = 0; i < magazines.length; i++) {
+                var category = '<option value="' + magazines[i].MagazineID + '">' + magazines[i].MagazineName + '</option>';
+                if (i == 0) {
+                    opt += category;
+                    $("#listOfMagazines").append(opt);
+                }
+                else {
+                    $("#listOfMagazines").append(category);
+                }
+
+            }
+        },
+         complete: function(){
+       $('#loadingImgInStats').removeClass('show');
+        $('#loadingImgInStats').addClass('hide');    
+      },
+        error: function (response, status, errorThrown) {
+            console.log(response.status);
+            //alert(errorThrown);
+        }
+    });
+}
+var publisherStats=function(magid){
+    var countSubscribed=[];
+    $('#divCanvas').removeClass('show');
+    $('#divCanvas').addClass('hide');
+    $('#loadingImgInStats').removeClass('hide');
+    $('#loadingImgInStats').addClass('show');
+    $.ajax({
+        url: "services/ClassPublisherStats.php",
+        type: "post",
+        data:{magID:magid},
+        success:function(response){
+           // alert(response);
+            var stats=$.parseJSON(response);
+            //alert(stats[0].MONTH);
+            if(stats==null){
+                swal({
+                         title: "No Subscription", 
+                         text: "Sorry Zero Subscriptions!", 
+                         type: "warning",
+                         showCancelButton: false,
+                         confirmButtonColor: "#DD6B55",
+                         confirmButtonText: "OK",
+                         closeOnConfirm: true 
+                     });
+            }
+            else{
+            for(i=0,j=0;i<12&&j<stats.length;i++){
+                if(stats[j].MONTH==i+1)                
+                    countSubscribed.push(stats[j++].COUNT_SUBSCRIBED);
+                else
+                    countSubscribed.push(0);
+          }
+          if(i<12)
+              for(;i<12;i++)
+                  countSubscribed.push(0);
+
+            
+            drawChart(countSubscribed);
+        }
+        },
+         complete: function(){
+       $('#loadingImgInStats').removeClass('show');
+       $('#loadingImgInStats').addClass('hide');    
+       $('#divCanvas').removeClass('hide');
+       $('#divCanvas').addClass('show');
+      },
+        error: function (response, status, errorThrown) {
+            console.log(response.status);
+            //alert(errorThrown);
+        }
+   
+        
+    });      
+}
+var drawChart=function(countSubscribed){
+    var data = {
+    labels: ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September","October", "November", "December" ],
+    datasets: [
+        {
+            label:"No. Of Magazines",
+
+            // The properties below allow an array to be specified to change the value of the item at the given index
+            // String  or array - the bar color
+            backgroundColor: "rgba(40, 53, 147, 0.4)",
+
+            // String or array - bar stroke color
+            borderColor: "rgba(26, 35, 126, 1)",
+
+            // Number or array - bar border width
+            borderWidth: 1,
+
+            // String or array - fill color when hovered
+            hoverBackgroundColor: "rgba(255,99,132,0.4)",
+
+            // String or array - border color when hovered
+            hoverBorderColor: "rgba(255,99,132,1)",
+
+            // The actual data
+            data: countSubscribed,
+
+            // String - If specified, binds the dataset to a certain y-axis. If not specified, the first y-axis is used.
+            yAxisID: "y-axis-0",
+        },
+        
+    ]
+    
+};
+    var ctx=$('#myChart');
+    var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+   });
+}

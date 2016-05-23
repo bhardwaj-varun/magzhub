@@ -18,6 +18,7 @@ if(!$SessionObj->checkIssetSessionPublisherId())
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="css/custom final/bootstrap.min.css" rel="stylesheet">
         <link href="css/offcanvas.css" rel="stylesheet" />
+        <link href="css/sweetalert.css" rel="stylesheet"/>
         <!--[if lt IE 9]>
                             <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
                     <![endif]-->
@@ -136,6 +137,7 @@ if(!$SessionObj->checkIssetSessionPublisherId())
                         <a href="#" id="addMag" class="list-group-item">Add Magazine</a>
                         <a href="#" id="addIssue" class="list-group-item">Add Issue</a>
                         <a href="#" id="changePassword" class="list-group-item">Change Password</a>
+                        <a href="#" id="subscriptionStatus" class="list-group-item">Subscription Statistics</a>
                     </div>
                 </div>
                 <!--magazine container-->
@@ -308,7 +310,23 @@ if(!$SessionObj->checkIssetSessionPublisherId())
                     </div>
                 </div>
                 <!-- end Add Magazine-->
-
+                <!-- Subscription stats-->
+                <div id="divSubscriptionStat" class="col-lg-10 hide">
+                   
+                    <div class="col-lg-4">
+                        <select id="listOfMagazines"  class="form-control">
+                         <option value="" selected="selected">Magazines</option>   
+                        </select>
+                    </div>
+                    <button  id="fetchListOfMagazines" class="btn btn-sm btn-primary">Go</button>
+                    <div class="col-lg-9">
+                    <img id="loadingImgInStats"src="img/ajax-loader.gif" style="padding-left:55%;padding-top: 12%;"class="hide"></img>
+                    </div>
+                    <div id="divCanvas" class="col-lg-offset-2 col-lg-8" style="margin-top:15vh;">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+                <!--end susbscription stats-->
 
             </div>
 
@@ -330,7 +348,8 @@ if(!$SessionObj->checkIssetSessionPublisherId())
         <script src='js/showMessage.js'></script>
         <script src="js/publisherDashBoard.js"></script>
         <script src="js/jquery.nicescroll.js"></script>
-       
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.0/Chart.js"></script>
+        <script src="js/sweetalert.min.js"></script>
         <!-- script references -->
     </body>
 </html>
