@@ -309,35 +309,35 @@ and open the template in the editor.
                 
                 <div class="col-lg-2 col-sm-6">
                     
-                        <img src="img/Images/1.png" class="img-responsive" alt="">
+                    <img src="img/Images/6303-physics.jpg" class="img-responsive" alt="">
                     
                 </div>
                 
                 <div class="col-lg-2 col-sm-6">
                     
-                        <img src="img/Images/4.png" class="img-responsive" alt="">
+                    <img src="img/Images/63469-chemistry.jpg" class="img-responsive" alt="">
                         
                 </div>
                 
                 <div class="col-lg-2 col-sm-6">
                    
-                        <img src="img/Images/2.png" class="img-responsive" alt="">
+                    <img src="img/Images/77039-biology.jpg" class="img-responsive" alt="">
                         
                 </div>
                  
                 <div class="col-lg-2 col-sm-6">
                    
-                        <img src="img/Images/5.png" class="img-responsive" alt="">
+                    <img src="img/Images/83176-math.jpg" class="img-responsive" alt="">
+                        
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    
+                        <img src="img/Images/1.png" class="img-responsive" alt="">
                         
                 </div>
                 <div class="col-lg-2 col-sm-6">
                     
                         <img src="img/Images/3.png" class="img-responsive" alt="">
-                        
-                </div>
-                <div class="col-lg-2 col-sm-6">
-                    
-                        <img src="img/Images/6.png" class="img-responsive" alt="">
                         
                        
                 </div>
